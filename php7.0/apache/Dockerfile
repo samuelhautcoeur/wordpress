@@ -1,5 +1,9 @@
 FROM php:7.0-apache
 
+COPY gcsfuse.repo /etc/yum.repos.d/  
+RUN dnf -y install gcsfuse  
+RUN mkdir -p /etc/letsencrypt  
+
 # install the PHP extensions we need
 RUN set -ex; \
 	\

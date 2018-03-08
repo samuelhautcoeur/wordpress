@@ -1,8 +1,15 @@
 FROM php:%%PHP_VERSION%%-%%VARIANT%%
 
-COPY gcsfuse.repo /etc/yum.repos.d/  
-RUN yum -y install gcsfuse  
-RUN mkdir -p /etc/letsencrypt  
+# gcsfuse
+RUN apt-get update  
+RUN apt-get install -y curl lsb-release gnupg
+
+RUN export GCSFUSE_REPO=gcsfuse-`lsb_release -c -s` \  
+    && echo "deb http://packages.cloud.google.com/apt $GCSFUSE_REPO main" | tee /etc/apt/sources.list.d/gcsfuse.list \
+    && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+
+RUN apt-get update  
+RUN apt-get install -y gcsfuse
 
 # install the PHP extensions we need
 RUN set -ex; \

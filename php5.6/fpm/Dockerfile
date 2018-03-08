@@ -1,6 +1,6 @@
 FROM php:5.6-fpm
 
-COPY ../../gcsfuse.repo /etc/yum.repos.d/  
+COPY gcsfuse.repo /etc/yum.repos.d/  
 RUN yum -y install gcsfuse  
 RUN mkdir -p /etc/letsencrypt  
 
